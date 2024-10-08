@@ -33,7 +33,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // });
 
 Route::controller(ProductController::class)->group(function(){
-    Route::get('addproduct/index','index');
+    Route::get('addproduct','index');
     Route::post('addproduct/create','store');
     Route::get('addproduct/{addproduct}','show');
     Route::post('addproduct/edit/{id}','update');
