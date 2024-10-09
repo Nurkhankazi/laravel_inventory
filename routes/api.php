@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\OrderController;
 // use App\Http\Controllers\Api\DesignationController;
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +36,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::controller(ProductController::class)->group(function(){
     Route::get('addproduct','index');
     Route::post('addproduct/create','store');
-    Route::get('addproduct/{addproduct}','show');
+    Route::get('addproduct/{addProduct}','show');
     Route::post('addproduct/edit/{id}','update');
-    Route::delete('addproduct/{addproduct}','destroy');
+    Route::delete('addproduct/{addProduct}','destroy');
+});
+Route::controller(OrderController::class)->group(function(){
+    Route::get('order','index');
+    Route::post('order/create','store');
+    Route::get('order/{order}','show');
+    Route::post('order/edit/{id}','update');
+    Route::delete('order/{order}','destroy');
 });
