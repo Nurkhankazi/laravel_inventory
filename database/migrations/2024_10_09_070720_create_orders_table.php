@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('orderitem');
             $table->integer('orderquantity')->nullable();
-            $table->decimal('orderprice', 8, 2)->nullable();
+            $table->decimal('orderprice',)->nullable();
             $table->text('ordernotes')->nullable();
+            $table->decimal('orderdate', 10)->nullable();
             $table->timestamps();
         });
     }
