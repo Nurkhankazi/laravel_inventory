@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\SuppliersController;
 // use App\Http\Controllers\Api\DesignationController;
 /*
 |--------------------------------------------------------------------------
@@ -46,4 +47,11 @@ Route::controller(OrderController::class)->group(function(){
     Route::get('order/{order}','show');
     Route::post('order/edit/{id}','update');
     Route::delete('order/{order}','destroy');
+});
+Route::controller(SuppliersController::class)->group(function(){
+        Route::get('suppliers','index');
+        Route::get('suppliers/{suppliers}','show');
+       Route::post('suppliers/edit/{id}','update');
+        Route::delete('suppliers/{suppliers}','destroy');
+        Route::post('suppliers/create','store');
 });
