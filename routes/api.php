@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\SuppliersController;
+use App\Http\Controllers\Api\PurchaseController;
+use App\Http\Controllers\Api\CustomerController;
 // use App\Http\Controllers\Api\DesignationController;
 /*
 |--------------------------------------------------------------------------
@@ -35,11 +37,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // });
 
 Route::controller(ProductController::class)->group(function(){
-    Route::get('addproduct','index');
-    Route::post('addproduct/create','store');
-    Route::get('addproduct/{addProduct}','show');
-    Route::post('addproduct/edit/{id}','update');
-    Route::delete('addproduct/{addProduct}','destroy');
+    Route::get('product','index');
+    Route::post('product/create','store');
+    Route::get('product/{product}','show');
+    Route::post('product/edit/{id}','update');
+    Route::delete('product/{product}','destroy');
 });
 Route::controller(OrderController::class)->group(function(){
     Route::get('order','index');
@@ -54,4 +56,18 @@ Route::controller(SuppliersController::class)->group(function(){
        Route::post('suppliers/edit/{id}','update');
         Route::delete('suppliers/{suppliers}','destroy');
         Route::post('suppliers/create','store');
+});
+Route::controller(PurchaseController::class)->group(function(){
+    Route::get('purchase','index');
+    Route::post('purchase/create','store');
+    Route::get('purchase/{purchase}','show');
+    Route::post('purchase/edit/{id}','update');
+    Route::delete('purchase/{purchase}','destroy');
+});
+Route::controller(CustomerController::class)->group(function(){
+    Route::get('customer','index');
+    Route::post('customer/create','store');
+    Route::get('customer/{customer}','show');
+    Route::post('customer/edit/{id}','update');
+    Route::delete('customer/{customer}','destroy');
 });

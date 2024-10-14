@@ -4,33 +4,33 @@ namespace App\Http\Controllers\Api;
 
 
 use Illuminate\Http\Request;
-use App\Models\AddProduct;
+use App\Models\Product;
 use App\Http\Controllers\Api\BaseController;
 
 class ProductController extends BaseController
 {
     public function index(){
-        $data=AddProduct::get();
-        return $this->sendResponse($data,"AddProduct data");
+        $data=Product::get();
+        return $this->sendResponse($data,"Product data");
     }
 
     public function store(Request $request){
-        $data=AddProduct::create($request->all());
-        return $this->sendResponse($data,"AddProduct created successfully");
+        $data=Product::create($request->all());
+        return $this->sendResponse($data,"Product created successfully");
     }
-    public function show(AddProduct $addProduct){
-        return $this->sendResponse($addProduct,"AddProduct created successfully");
+    public function show(Product $product){
+        return $this->sendResponse($product,"Product created successfully");
     }
 
     public function update(Request $request,$id){
 
-        $data=AddProduct::where('id',$id)->update($request->all());
-        return $this->sendResponse($id,"AddProduct updated successfully");
+        $data=Product::where('id',$id)->update($request->all());
+        return $this->sendResponse($id,"Product updated successfully");
     }
 
-    public function destroy(AddProduct $addProduct)
+    public function destroy(Product $product)
     {
-        $addProduct=$addProduct->delete();
-        return $this->sendResponse($addProduct,"AddProduct deleted successfully");
+        $product=$product->delete();
+        return $this->sendResponse($product,"Product deleted successfully");
     }
 }
