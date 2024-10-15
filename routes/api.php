@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\SuppliersController;
 use App\Http\Controllers\Api\PurchaseController;
 use App\Http\Controllers\Api\CustomerController;
+use App\Http\Controllers\Api\CategoryController;
 // use App\Http\Controllers\Api\DesignationController;
 /*
 |--------------------------------------------------------------------------
@@ -70,4 +71,11 @@ Route::controller(CustomerController::class)->group(function(){
     Route::get('customer/{customer}','show');
     Route::post('customer/edit/{id}','update');
     Route::delete('customer/{customer}','destroy');
+});
+Route::controller(CategoryController::class)->group(function(){
+    Route::get('category','index');
+    Route::post('category/create','store');
+    Route::get('category/{category}','show');
+    Route::post('category/edit/{id}','update');
+    Route::delete('category/{category}','destroy');
 });
