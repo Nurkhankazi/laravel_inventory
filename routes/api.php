@@ -9,6 +9,8 @@ use App\Http\Controllers\Api\SuppliersController;
 use App\Http\Controllers\Api\PurchaseController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\StockController;
+use App\Http\Controllers\Api\SalesController;
 // use App\Http\Controllers\Api\DesignationController;
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +67,13 @@ Route::controller(PurchaseController::class)->group(function(){
     Route::post('purchase/edit/{id}','update');
     Route::delete('purchase/{purchase}','destroy');
 });
+Route::controller(SalesController::class)->group(function(){
+    Route::get('sales','index');
+    Route::post('sales/create','store');
+    Route::get('sales/{sales}','show');
+    Route::post('sales/edit/{id}','update');
+    Route::delete('sales/{sales}','destroy');
+});
 Route::controller(CustomerController::class)->group(function(){
     Route::get('customer','index');
     Route::post('customer/create','store');
@@ -78,4 +87,7 @@ Route::controller(CategoryController::class)->group(function(){
     Route::get('category/{category}','show');
     Route::post('category/edit/{id}','update');
     Route::delete('category/{category}','destroy');
+});
+Route::controller(StockController::class)->group(function(){
+    Route::get('stock','index');
 });

@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Purchase extends Model
 {
     use HasFactory;
-    protected $fillable=['addproduct', 'suppliername', 'quantity', 'price ', 'amount', 'date'];
+    protected $fillable=['supplier_id', 'purchase_date', 'total', 'discount', 'tax', 'gtotal', 'discountamt', 'taxamt'];
+    public function supplier()
+    {
+        return $this->belongsTo(suppliers::class);
+    }
 
 }
