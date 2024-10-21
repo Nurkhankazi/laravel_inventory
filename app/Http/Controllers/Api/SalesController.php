@@ -36,8 +36,7 @@ class SalesController extends BaseController
             SalesItem::create($item);
             $stock['sales_id']=$data->id;
             $stock['product_id']=$itms['id'];
-            //$stock['qty']="-".$itms['quantity']; //use for sales
-            $stock['qty']=$itms['quantity'];
+            $stock['qty']="-".$itms['quantity']; //use for sales
             $stock['price']=$itms['price'];
             Stock::create($stock);
         }
