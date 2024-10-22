@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('quantity')->nullable();
             $table->decimal('price', 6, 2)->nullable();
-            $table->string('category')->nullable();
+            $table->integer('category_id');
             $table->timestamps();
         });
     }

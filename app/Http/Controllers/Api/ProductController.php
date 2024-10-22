@@ -10,12 +10,14 @@ use App\Http\Controllers\Api\BaseController;
 class ProductController extends BaseController
 {
     public function index(){
-        $data=Product::get();
+        $data=Product::with('category')->get();
         return $this->sendResponse($data,"Product data");
     }
 
     public function store(Request $request){
-        $data=Product::create($request->all());
+        $purchase_data['category_id']=$request->input['category_id'];
+
+        $data=Product::create($request->data);
         return $this->sendResponse($data,"Product created successfully");
     }
     public function show(Product $product){
