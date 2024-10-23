@@ -15,9 +15,7 @@ class ProductController extends BaseController
     }
 
     public function store(Request $request){
-        $purchase_data['category_id']=$request->input['category_id'];
-
-        $data=Product::create($request->data);
+        $data=Product::create($request->all());
         return $this->sendResponse($data,"Product created successfully");
     }
     public function show(Product $product){
@@ -25,7 +23,6 @@ class ProductController extends BaseController
     }
 
     public function update(Request $request,$id){
-
         $data=Product::where('id',$id)->update($request->all());
         return $this->sendResponse($id,"Product updated successfully");
     }
