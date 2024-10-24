@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sales_returns', function (Blueprint $table) {
+        Schema::create('purchase_returns', function (Blueprint $table) {
             $table->id();
-            $table->integer('customer_id');
-            $table->string('salesreturn_date');
+            $table->integer('supplier_id');
+            $table->string('purchasereturn_date');
             $table->decimal('total',10,2);
             $table->decimal('discount',10,2);
             $table->decimal('tax',10,2);
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sales_returns');
+        Schema::dropIfExists('purchase_returns');
     }
 };

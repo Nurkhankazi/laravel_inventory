@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Models\SalesReturn;
-use App\Models\SalesItem;
+use App\Models\SalesReturnItem;
 use App\Models\Stock;
 use App\Http\Controllers\Api\BaseController;
 
@@ -13,28 +13,28 @@ class SalesReturnController extends BaseController
 {
     public function index(){
         $data=SalesReturn::with('customer')->get();
-        return $this->sendResponse($data,"Sales data");
+        return $this->sendResponse($data,"SalesReturn data");
     }
 
     public function store(Request $request){
         //return $request->all();
         
-        $sales_data['customer_id']=$request->input['customer_id'];
-        $sales_data['sales_date']=$request->input['sales_date'];
-        $sales_data['total']=$request->totalData['total'];
-        $sales_data['discount']=$request->totalData['discount'];
-        $sales_data['tax']=$request->totalData['tax'];
-        $sales_data['gtotal']=$request->totalData['finalTotal'];
-        $sales_data['discountamt']=$request->totalData['discountAmt']?? 0;
-        $sales_data['taxamt']=$request->totalData['taxAmt']?? 0;
-        $data=SalesReturn::create($sales_data);
+        $salesreturn_data['customer_id']=$request->input['customer_id'];
+        $salesreturn_data['salesreturn_date']=$request->input['salesreturn_date'];
+        $salesreturn_data['total']=$request->totalData['total'];
+        $salesreturn_data['discount']=$request->totalData['discount'];
+        $salesreturn_data['tax']=$request->totalData['tax'];
+        $salesreturn_data['gtotal']=$request->totalData['finalTotal'];
+        $salesreturn_data['discountamt']=$request->totalData['discountAmt']?? 0;
+        $salesreturn_data['taxamt']=$request->totalData['taxAmt']?? 0;
+        $data=SalesReturn::create($salesreturn_data);
         foreach($request->cartitems as $itms){
-            $item['sales_id']=$data->id;
+            $item['salesreturn_id']=$data->id;
             $item['product_id']=$itms['id'];
             $item['qty']=$itms['quantity'];
             $item['price']=$itms['price'];
-            SalesItem::create($item);
-            $stock['sales_id']=$data->id;
+            SalesReturnItem::create($item);
+            $stock['salesreturn_id']=$data->id;
             $stock['product_id']=$itms['id'];
             // $stock['qty']="-".$itms['quantity']; //use for sales
             $stock['qty']=$itms['quantity'];
@@ -42,21 +42,21 @@ class SalesReturnController extends BaseController
             Stock::create($stock);
         }
        
-        return $this->sendResponse($data,"Sales created successfully");
+        return $this->sendResponse($data,"SalesReturn created successfully");
     }
-    public function show(Sales $sales){
-        return $this->sendResponse($sales,"Sales created successfully");
+    public function show(SalesReturn $salesreturn){
+        return $this->sendResponse($salesreturn,"SalesReturn created successfully");
     }
 
     public function update(Request $request,$id){
 
-        $data=Sales::where('id',$id)->update($request->all());
-        return $this->sendResponse($id,"Sales updated successfully");
+        $data=SalesReturn::where('id',$id)->update($request->all());
+        return $this->sendResponse($id,"SalesReturn updated successfully");
     }
 
-    public function destroy(Sales $sales)
+    public function destroy(SalesReturn $salesreturn)
     {
-        $sales=$sales->delete();
-        return $this->sendResponse($sales,"Sales deleted successfully");
+        $salesreturn=$salesreturn->delete();
+        return $this->sendResponse($salesreturn,"SalesReturn deleted successfully");
     }
 }

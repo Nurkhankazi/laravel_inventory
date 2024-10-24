@@ -4,9 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProductController;
-use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\SuppliersController;
 use App\Http\Controllers\Api\PurchaseController;
+use App\Http\Controllers\Api\PurchaseReturnController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\StockController;
@@ -47,13 +47,6 @@ Route::controller(ProductController::class)->group(function(){
     Route::post('product/edit/{id}','update');
     Route::delete('product/{product}','destroy');
 });
-Route::controller(OrderController::class)->group(function(){
-    Route::get('order','index');
-    Route::post('order/create','store');
-    Route::get('order/{order}','show');
-    Route::post('order/edit/{id}','update');
-    Route::delete('order/{order}','destroy');
-});
 Route::controller(SuppliersController::class)->group(function(){
         Route::get('suppliers','index');
         Route::get('suppliers/{suppliers}','show');
@@ -68,19 +61,26 @@ Route::controller(PurchaseController::class)->group(function(){
     Route::post('purchase/edit/{id}','update');
     Route::delete('purchase/{purchase}','destroy');
 });
+Route::controller(PurchaseReturnController::class)->group(function(){
+    Route::get('purchasereturn','index');
+    Route::post('purchasereturn/create','store');
+    Route::get('purchasereturn/{purchasereturn}','show');
+    Route::post('purchasereturn/edit/{id}','update');
+    Route::delete('purchasereturn/{purchasereturn}','destroy');
+});
 Route::controller(SalesController::class)->group(function(){
     Route::get('sales','index');
     Route::post('sales/create','store');
     Route::get('sales/{sales}','show');
-    Route::post('sales/edit/{id}','update');
+    Route::post('sales/payment/{id}','payment');
     Route::delete('sales/{sales}','destroy');
 });
 Route::controller(SalesReturnController::class)->group(function(){
-    Route::get('sales','index');
-    Route::post('sales/create','store');
-    Route::get('sales/{sales}','show');
-    Route::post('sales/edit/{id}','update');
-    Route::delete('sales/{sales}','destroy');
+    Route::get('salesreturn','index');
+    Route::post('salesreturn/create','store');
+    Route::get('salesreturn/{salesreturn}','show');
+    Route::post('salesreturn/edit/{id}','update');
+    Route::delete('salesreturn/{salesreturn}','destroy');
 });
 Route::controller(CustomerController::class)->group(function(){
     Route::get('customer','index');
