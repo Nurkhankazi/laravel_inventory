@@ -58,7 +58,7 @@ Route::controller(PurchaseController::class)->group(function(){
     Route::get('purchase','index');
     Route::post('purchase/create','store');
     Route::get('purchase/{purchase}','show');
-    Route::post('purchase/edit/{id}','update');
+    Route::post('purchase/payment/{id}','payment');
     Route::delete('purchase/{purchase}','destroy');
 });
 Route::controller(PurchaseReturnController::class)->group(function(){

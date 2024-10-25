@@ -7,18 +7,20 @@ use Illuminate\Http\Request;
 use App\Models\Purchase;
 use App\Models\PurchaseItem;
 use App\Models\Stock;
+use App\Models\Payment;
 use App\Http\Controllers\Api\BaseController;
 
 class PurchaseController extends BaseController
 {
     public function index(){
-        $data=Purchase::with('supplier')->get();
+        // $data=Purchase::with('supplier')->get();
+        $data=Purchase::with('supplier')->withSum('payment','amount')->get();
         return $this->sendResponse($data,"Purchase data");
     }
 
     public function store(Request $request){
         //return $request->all();
-        
+
         $purchase_data['supplier_id']=$request->input['supplier_id'];
         $purchase_data['purchase_date']=$request->input['purchase_date'];
         $purchase_data['total']=$request->totalData['total'];
@@ -41,17 +43,36 @@ class PurchaseController extends BaseController
             $stock['price']=$itms['price'];
             Stock::create($stock);
         }
-       
+
+        $payment['purchase_id']=$data->id;
+        $payment['supplier_id']=$request->input['supplier_id'];
+        $payment['pay_type']=$request->input['pay_type'];
+        $payment['amount']=$request->input['amount'];
+        $payment['bank_name']=$request->input['bank_name'];
+        $payment['check_number']=$request->input['check_number'];
+        $payment['check_date']=$request->input['check_date'];
+        Payment::create($payment);
+
         return $this->sendResponse($data,"Purchase created successfully");
     }
     public function show(Purchase $purchase){
+        $purchase=Purchase::with('supplier')->withSum('payment','amount')->find($purchase->id);
         return $this->sendResponse($purchase,"Purchase created successfully");
     }
 
-    public function update(Request $request,$id){
+    public function payment(Request $request,$id){
+        //return $request->all();
+        $data=Purchase::find($id);
 
-        $data=Purchase::where('id',$id)->update($request->all());
-        return $this->sendResponse($id,"Purchase updated successfully");
+        $payment['purchase_id']=$data->id;
+        $payment['supplier_id']=$data->supplier_id;
+        $payment['pay_type']=$request->input['pay_type'];
+        $payment['amount']=$request->input['amount'];
+        $payment['bank_name']=$request->input['bank_name'];
+        $payment['check_number']=$request->input['check_number'];
+        $payment['check_date']=$request->input['check_date'];
+        Payment::create($payment);
+        return $this->sendResponse($data,"Purchase pay successfully");
     }
 
     public function destroy(Purchase $purchase)
