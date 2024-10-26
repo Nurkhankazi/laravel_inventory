@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
-    protected $fillable=['name', 'description', 'quantity', 'price', 'category_id'];
+    protected $fillable=['name', 'description', 'quantity', 'price', 'category_id', 'photo'];
 
      /**
      * Get the user that owns the Doctor

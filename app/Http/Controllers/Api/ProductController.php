@@ -15,7 +15,21 @@ class ProductController extends BaseController
     }
 
     public function store(Request $request){
-        $data=Product::create($request->all());
+         /* for files */
+   $input=$request->all();
+   $files=[];
+   if($request->hasFile('files')){
+       foreach($request->file('files') as $f){
+           $photoname=time().rand(1111,9999).".".$f->extension();
+           $photoPath=public_path().'/productsadd';
+           if($f->move($photoPath,$photoname)){
+               array_push($files,$photoname);
+           }
+       }
+   }
+   $input['photo']=implode(',',$files);
+   /* /for files */
+        $data=Product::create($input);
         return $this->sendResponse($data,"Product created successfully");
     }
     public function show(Product $product){
@@ -23,7 +37,22 @@ class ProductController extends BaseController
     }
 
     public function update(Request $request,$id){
-        $data=Product::where('id',$id)->update($request->all());
+
+        $input=$request->all();
+        /* for files */
+        $files=[];
+        if($request->hasFile('files')){
+            foreach($request->file('files') as $f){
+                $photoname=time().rand(1111,9999).".".$f->extension();
+                $photoPath=public_path().'/productsadd';
+                if($f->move($photoPath,$photoname)){
+                    array_push($files,$photoname);
+                }
+            }
+            $input['photo']=implode(',',$files);
+        }
+        unset($input['files']);
+        $product=Product::where('id',$id)->update($input);
         return $this->sendResponse($id,"Product updated successfully");
     }
 
