@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\SalesReturn;
 use App\Models\SalesReturnItem;
 use App\Models\Stock;
+use App\Models\Payment;
 use App\Http\Controllers\Api\BaseController;
 
 class SalesReturnController extends BaseController
@@ -18,7 +19,7 @@ class SalesReturnController extends BaseController
 
     public function store(Request $request){
         //return $request->all();
-        
+
         $salesreturn_data['customer_id']=$request->input['customer_id'];
         $salesreturn_data['salesreturn_date']=$request->input['salesreturn_date'];
         $salesreturn_data['total']=$request->totalData['total'];
@@ -41,18 +42,40 @@ class SalesReturnController extends BaseController
             $stock['price']=$itms['price'];
             Stock::create($stock);
         }
-       
+
+        /* sales payment */
+        $payment['salesreturn_id']=$data->id;
+        $payment['customer_id']=$request->input['customer_id'];
+        $payment['pay_type']=$request->input['pay_type'];
+        $payment['amount']=$request->input['amount'];
+        $payment['bank_name']=$request->input['bank_name'];
+        $payment['check_number']=$request->input['check_number'];
+        $payment['check_date']=$request->input['check_date'];
+        Payment::create($payment);
+        /* sales payment */
+
         return $this->sendResponse($data,"SalesReturn created successfully");
     }
     public function show(SalesReturn $salesreturn){
+        $salesreturn=SalesReturn::with('customer')->withSum('payment','amount')->find($salesreturn->id);
         return $this->sendResponse($salesreturn,"SalesReturn created successfully");
     }
 
-    public function update(Request $request,$id){
+    public function payment(Request $request,$id){  //payment
+         //return $request->all();
+         $data=SalesReturn::find($id);
 
-        $data=SalesReturn::where('id',$id)->update($request->all());
-        return $this->sendResponse($id,"SalesReturn updated successfully");
-    }
+         $payment['salesreturn_id']=$data->id;
+         $payment['customer_id']=$data->customer_id;
+         $payment['pay_type']=$request->input['pay_type'];
+         $payment['amount']=$request->input['amount'];
+         $payment['bank_name']=$request->input['bank_name'];
+         $payment['check_number']=$request->input['check_number'];
+         $payment['check_date']=$request->input['check_date'];
+         Payment::create($payment);
+         return $this->sendResponse($data,"SalesReturn pay successfully");
+     }
+
 
     public function destroy(SalesReturn $salesreturn)
     {

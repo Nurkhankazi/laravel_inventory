@@ -79,7 +79,7 @@ Route::controller(SalesReturnController::class)->group(function(){
     Route::get('salesreturn','index');
     Route::post('salesreturn/create','store');
     Route::get('salesreturn/{salesreturn}','show');
-    Route::post('salesreturn/edit/{id}','update');
+    Route::post('salesreturn/payment/{id}','payment');
     Route::delete('salesreturn/{salesreturn}','destroy');
 });
 Route::controller(CustomerController::class)->group(function(){
