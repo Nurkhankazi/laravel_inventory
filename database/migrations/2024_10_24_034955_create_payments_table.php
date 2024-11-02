@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('sales_id')->nullable();
             $table->integer('sales_return_id')->nullable();
             $table->integer('purchase_id')->nullable();
-            $table->integer('purchasereturn_id')->nullable();
+            $table->integer('purchase_return_id')->nullable();
             $table->integer('customer_id')->nullable();
             $table->integer('supplier_id')->nullable();
             $table->decimal('amount');

@@ -13,7 +13,8 @@ use App\Http\Controllers\Api\BaseController;
 class SalesReturnController extends BaseController
 {
     public function index(){
-        $data=SalesReturn::with('customer')->get();
+        // $data=Sales::with('customer')->get();
+        $data=SalesReturn::with('customer')->withSum('payment','amount')->get();
         return $this->sendResponse($data,"SalesReturn data");
     }
 
@@ -30,21 +31,20 @@ class SalesReturnController extends BaseController
         $salesreturn_data['taxamt']=$request->totalData['taxAmt']?? 0;
         $data=SalesReturn::create($salesreturn_data);
         foreach($request->cartitems as $itms){
-            $item['salesreturn_id']=$data->id;
+            $item['sales_return_id']=$data->id;
             $item['product_id']=$itms['id'];
             $item['qty']=$itms['quantity'];
             $item['price']=$itms['price'];
             SalesReturnItem::create($item);
-            $stock['salesreturn_id']=$data->id;
+            $stock['sales_return_id']=$data->id;
             $stock['product_id']=$itms['id'];
-            // $stock['qty']="-".$itms['quantity']; //use for sales
+            // $stock['qty']="-".$itms['quantity'];
             $stock['qty']=$itms['quantity'];
             $stock['price']=$itms['price'];
             Stock::create($stock);
         }
 
-        /* sales payment */
-        $payment['salesreturn_id']=$data->id;
+        $payment['sales_return_id']=$data->id;
         $payment['customer_id']=$request->input['customer_id'];
         $payment['pay_type']=$request->input['pay_type'];
         $payment['amount']=$request->input['amount'];
@@ -52,7 +52,6 @@ class SalesReturnController extends BaseController
         $payment['check_number']=$request->input['check_number'];
         $payment['check_date']=$request->input['check_date'];
         Payment::create($payment);
-        /* sales payment */
 
         return $this->sendResponse($data,"SalesReturn created successfully");
     }
@@ -61,21 +60,20 @@ class SalesReturnController extends BaseController
         return $this->sendResponse($salesreturn,"SalesReturn created successfully");
     }
 
-    public function payment(Request $request,$id){  //payment
-         //return $request->all();
-         $data=SalesReturn::find($id);
+    public function payment(Request $request,$id){
+        //return $request->all();
+        $data=SalesReturn::find($id);
 
-         $payment['salesreturn_id']=$data->id;
-         $payment['customer_id']=$data->customer_id;
-         $payment['pay_type']=$request->input['pay_type'];
-         $payment['amount']=$request->input['amount'];
-         $payment['bank_name']=$request->input['bank_name'];
-         $payment['check_number']=$request->input['check_number'];
-         $payment['check_date']=$request->input['check_date'];
-         Payment::create($payment);
-         return $this->sendResponse($data,"SalesReturn pay successfully");
-     }
-
+        $payment['sales_return_id']=$data->id;
+        $payment['customer_id']=$data->customer_id;
+        $payment['pay_type']=$request->input['pay_type'];
+        $payment['amount']=$request->input['amount'];
+        $payment['bank_name']=$request->input['bank_name'];
+        $payment['check_number']=$request->input['check_number'];
+        $payment['check_date']=$request->input['check_date'];
+        Payment::create($payment);
+        return $this->sendResponse($data,"SalesReturn pay successfully");
+    }
 
     public function destroy(SalesReturn $salesreturn)
     {

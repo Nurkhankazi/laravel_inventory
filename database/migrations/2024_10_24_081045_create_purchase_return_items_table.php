@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('purchase_return_items', function (Blueprint $table) {
             $table->id();
-            $table->integer('purchasereturn_id');
+            $table->integer('purchase_return_id');
             $table->integer('product_id');
             $table->integer('qty');
             $table->decimal('price',10,2);

@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
             $table->integer('sales_id')->nullable();
+            $table->integer('sales_return_id')->nullable();
             $table->integer('purchase_id')->nullable();
+            $table->integer('purchase_return_id')->nullable();
             $table->integer('product_id');
             $table->integer('qty');
             $table->decimal('price',10,2);
