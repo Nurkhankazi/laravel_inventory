@@ -17,4 +17,8 @@ class Sales extends Model
     {
         return $this->hasMany(Payment::class);
     }
+    public function details()
+    {
+        return $this->hasMany(SalesItem::class,'sales_id')->with('product:id,name');
+    }
 }

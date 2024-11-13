@@ -13,7 +13,7 @@ use App\Http\Controllers\Api\BaseController;
 class SalesController extends BaseController
 {
     public function index(){
-        $data=Sales::with('customer')->withSum('payment','amount')->get();
+        $data=Sales::with('customer','details')->withSum('payment','amount')->get();
         return $this->sendResponse($data,"Sales data");
     }
 
@@ -56,7 +56,7 @@ class SalesController extends BaseController
         return $this->sendResponse($data,"Sales created successfully");
     }
     public function show(Sales $sales){
-        $sales=Sales::with('customer')->withSum('payment','amount')->find($sales->id);
+        $sales=Sales::with('customer','details')->withSum('payment','amount')->find($sales->id);
         return $this->sendResponse($sales,"Sales created successfully");
     }
 
