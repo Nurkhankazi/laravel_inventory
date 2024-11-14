@@ -14,7 +14,7 @@ class PurchaseController extends BaseController
 {
     public function index(){
         // $data=Purchase::with('supplier')->get();
-        $data=Purchase::with('supplier')->withSum('payment','amount')->get();
+        $data=Purchase::with('supplier','details')->withSum('payment','amount')->get();
         return $this->sendResponse($data,"Purchase data");
     }
 
@@ -56,7 +56,7 @@ class PurchaseController extends BaseController
         return $this->sendResponse($data,"Purchase created successfully");
     }
     public function show(Purchase $purchase){
-        $purchase=Purchase::with('supplier')->withSum('payment','amount')->find($purchase->id);
+        $purchase=Purchase::with('supplier','details')->withSum('payment','amount')->find($purchase->id);
         return $this->sendResponse($purchase,"Purchase created successfully");
     }
 

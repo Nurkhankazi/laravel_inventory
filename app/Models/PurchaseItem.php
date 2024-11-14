@@ -9,4 +9,13 @@ class PurchaseItem extends Model
 {
     use HasFactory;
     protected $fillable=['purchase_id','product_id', 'qty', 'price'];
+    /**
+     * Get the user that owns the PurchaseItem
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
 }
