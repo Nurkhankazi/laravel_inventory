@@ -12,7 +12,8 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\StockController;
 use App\Http\Controllers\Api\SalesController;
 use App\Http\Controllers\Api\SalesReturnController;
-// use App\Http\Controllers\Api\DesignationController;
+use App\Http\Controllers\Api\AccountHeadController;
+use App\Http\Controllers\Api\ExpenseController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -40,6 +41,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     Route::post('designation/create','store');
 // });
 
+Route::controller(AccountHeadController::class)->group(function(){
+    Route::get('account_head','index');
+    Route::post('account_head/create','store');
+    Route::get('account_head/{account_head}','show');
+    Route::post('account_head/edit/{id}','update');
+    Route::delete('account_head/{account_head}','destroy');
+});
+Route::controller(ExpenseController::class)->group(function(){
+    Route::get('expense','index');
+    Route::post('expense/create','store');
+    Route::get('expense/{expense}','show');
+    Route::post('expense/edit/{id}','update');
+    Route::delete('expense/{expense}','destroy');
+    Route::get('expense_report','expReport');
+});
 Route::controller(ProductController::class)->group(function(){
     Route::get('product','index');
     Route::post('product/create','store');
